@@ -1,0 +1,31 @@
+version: '3'
+services:
+    rabbitmq:
+        image: rabbitmq:management
+        ports:
+            - "4369:4369"
+            - "5671:5671"
+            - "25672:25672"
+            - "5672:5672"
+            - "15672:15672"
+        volumes:
+            - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+            - ./config/advanced.config:/etc/rabbitmq/advanced.config
+        container_name: rabbitmq
+        hostname: rabbitmq
+        restart: always
+    client_rabbitmq:
+        image: rabbitmq:management
+        ports:
+            - "4370:4369"
+            - "5673:5671"
+            - "25673:25672"
+            - "5674:5672"
+            - "15674:15672"
+        container_name: client_rabbitmq
+        hostname: client_rabbitmq
+        restart: always
+networks:
+    default:
+        external:
+            name: local
